@@ -13,14 +13,20 @@ const eventSchema = new mongoose.Schema(
       required: true,
       min: 1,
     },
-    event_data: {
+    event_date: {
       type: Date,
       required: true,
-      null: false,
-      greaterthan: Date().now(),
+      validate: {
+        validator: function (value) {
+          return value > new Date();
+        },
+        message: "Event date must be in the future.",
+      },
     },
   },
   {
     timestamps: true,
   },
 );
+
+module.exports = mongoose.model("Event", eventSchema);
