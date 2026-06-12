@@ -1,0 +1,48 @@
+# ---------------------------------------------------------------------------
+# MERN Stack Master .gitignore
+# ---------------------------------------------------------------------------
+
+# Dependencies (Node.js & React)
+node_modules/
+jspm_packages/
+web_modules/
+
+# Production/Build Outcomes
+build/
+dist/
+out/
+.next/
+
+# Environment Variables & Secrets (CRITICAL)
+.env
+*.pem
+*.key
+
+# Debugging and System Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Editor/IDE Specific Files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Testing & Coverage
+coverage/
+.nyc_output/
+
+# Optional: Local Database data (if running MongoDB locally inside project)
+data/
+db/
