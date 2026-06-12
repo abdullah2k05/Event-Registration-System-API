@@ -13,6 +13,11 @@ const eventSchema = new mongoose.Schema(
       required: true,
       min: 1,
     },
+    registered_count: {
+      type: Number,
+      default: 0,
+    },
+
     event_date: {
       type: Date,
       required: true,

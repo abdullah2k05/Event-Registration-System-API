@@ -43,4 +43,16 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  try {
+    const data = await Event.findByIdAndDelete(req.params.id);
+    if (!data) {
+      return res.status(404).json({ error: "Event not found" });
+    }
+    res.json({ message: "Event deleted successfully" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
 module.exports = router;

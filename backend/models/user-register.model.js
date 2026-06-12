@@ -11,7 +11,6 @@ const userRegSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      unique: true,
       trim: true,
     },
     eventID: {
@@ -32,4 +31,4 @@ const userRegSchema = new mongoose.Schema(
 
 userRegSchema.index({ email: 1, eventID: 1 }, { unique: true });
 
-moduleexports = mongoose.model("UserRegister", userRegSchema);
+module.exports = mongoose.model("UserRegister", userRegSchema);
