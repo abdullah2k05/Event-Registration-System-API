@@ -83,7 +83,9 @@ router.post("/", async (req, res) => {
 // Get all registrations
 router.get("/", async (req, res) => {
   try {
-    const data = await RegModel.find().populate("eventID");
+    const data = await RegModel.find({ status: "registered" }).populate(
+      "eventID",
+    );
 
     res.status(200).json(data);
   } catch (err) {
