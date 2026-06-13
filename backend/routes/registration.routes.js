@@ -6,7 +6,7 @@ const EventModel = require("../models/event.model");
 // Create a new registration
 router.post("/", async (req, res) => {
   try {
-    const { name, email, eventID } = req.body;
+    const { name, eventID } = req.body;
 
     // edge case 1 : Event Existed or not
     const findData = await EventModel.findById(eventID);
@@ -16,7 +16,6 @@ router.post("/", async (req, res) => {
 
     // no 2 : duplicate registration
     const existReg = await RegModel.findOne({
-      email,
       eventID,
       status: "registered",
     });
@@ -45,7 +44,7 @@ router.post("/", async (req, res) => {
 
     const registration = await RegModel.create({
       name,
-      email,
+
       eventID,
     });
 

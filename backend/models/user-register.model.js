@@ -8,11 +8,7 @@ const userRegSchema = new mongoose.Schema(
       trim: true,
       index: true,
     },
-    // email: {
-    //   type: String,
-    //   required: true,
-    //   trim: true,
-    // },
+
     eventID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Event",
@@ -29,6 +25,6 @@ const userRegSchema = new mongoose.Schema(
   },
 );
 
-userRegSchema.index({ email: 1, eventID: 1 }, { unique: true });
+userRegSchema.index({ name: 1, eventID: 1 }, { unique: true });
 
 module.exports = mongoose.model("UserRegister", userRegSchema);
