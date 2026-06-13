@@ -11,6 +11,11 @@ router.post("/", async (req, res) => {
     await event.save();
     res.status(201).json(event);
   } catch (err) {
+    if (err.code === 11000) {
+      return res.status(400).json({
+        error: "Event name already exists",
+      });
+    }
     console.error(err);
     res.status(500).json({ error: "Server error" });
   }
@@ -20,8 +25,22 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const events = await Event.find().sort({ event_date: 1 });
-    res.json(events);
+    let filter = {};
+    if (req.query.upcoming === "true") {
+      filter.event_date = { $gte: new Date() };
+    }
+
+    const events = await Event.find(filter).sort({ event_date: 1 });
+    const formattedEvents = events.map((events) => ({
+      _id: events._id,
+      name: events.name,
+      total_seats: events.total_seats,
+      registered_count: events.registered_count,
+      event_date: events.event_date,
+      available_seats: events.total_seats - events.registered_count,
+    }));
+
+    res.json(formattedEvents);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
@@ -43,16 +62,17 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
-  try {
-    const data = await Event.findByIdAndDelete(req.params.id);
-    if (!data) {
-      return res.status(404).json({ error: "Event not found" });
-    }
-    res.json({ message: "Event deleted successfully" });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Server error" });
-  }
-});
+// router.delete("/:id", async (req, res) => {
+//   try {
+//     const data = await Event.findByIdAndDelete(req.params.id);
+//     if (!data) {
+//       return res.status(404).json({ error: "Event not found" });
+//     }
+//     res.json({ message: "Event deleted successfully" });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// });
+
 module.exports = router;
